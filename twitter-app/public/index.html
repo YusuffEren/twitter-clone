@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home / Twitter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <header class="sidebar">
+            <div class="logo">
+                <!-- Classic Twitter Bird Logo -->
+                <svg viewBox="0 0 24 24" class="twitter-icon">
+                    <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z"></path>
+                </svg>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" onclick="loadContent('home')">
+                    <div class="icon"><i class="fas fa-house"></i></div>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="icon"><i class="fas fa-magnifying-glass"></i></div>
+                    <span>Explore</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="icon"><i class="far fa-bell"></i></div>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="icon"><i class="far fa-envelope"></i></div>
+                    <span>Messages</span>
+                </a>
+                <a href="#" class="nav-item" onclick="loadContent('users')">
+                    <div class="icon"><i class="far fa-user"></i></div>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <div class="icon"><i class="fas fa-ellipsis"></i></div>
+                    <span>More</span>
+                </a>
+
+                <button class="btn-sidebar-tweet">Tweet</button>
+            </nav>
+
+            <div class="user-select">
+                <div class="user-mini-profile">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #1DA1F2, #71c9f8); display: flex; align-items: center; justify-content: center; font-weight: bold; color: white;" id="miniProfileAvatar">?</div>
+                    <div style="flex: 1; overflow: hidden;">
+                        <select id="currentUser" style="font-weight: 700; color: #14171a; background: transparent; border: none; width: 100%;">
+                            <option value="">Select User...</option>
+                        </select>
+                        <div style="color: #657786; font-size: 15px;">@username</div>
+                    </div>
+                    <i class="fas fa-ellipsis" style="color: #14171a;"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Feed -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 id="pageTitle">Home</h1>
+            </div>
+
+            <div class="tweet-composer" id="tweetComposer">
+                <div class="composer-avatar">
+                   <i class="fas fa-user"></i>
+                </div>
+                <div class="composer-input">
+                    <textarea id="tweetContent" placeholder="What's happening?"></textarea>
+                    <div class="composer-actions">
+                        <div style="color: #1DA1F2; font-size: 18px; display: flex; gap: 16px;">
+                            <i class="far fa-image"></i>
+                            <i class="fas fa-list"></i>
+                            <i class="far fa-smile"></i>
+                            <i class="far fa-calendar"></i>
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span id="charCount" style="color: #657786; font-size: 13px;">0</span>
+                            <button id="tweetBtn" class="btn-tweet" disabled>Tweet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contentArea">
+                <div class="loading">
+                    <i class="fas fa-circle-notch fa-spin fa-2x"></i>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Widgets -->
+        <aside class="right-sidebar">
+            <div class="search-container">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" class="search-input" placeholder="Search Twitter">
+            </div>
+
+            <div class="trending-box">
+                <h3>Trends for you</h3>
+                <div id="trendingList">
+                     <!-- Trends will be loaded here -->
+                </div>
+            </div>
+
+            <div class="stats-box">
+                <h3>Who to follow</h3>
+                <div id="dbStats">
+                    <!-- Stats will be loaded here -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div id="commentModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                <button onclick="closeCommentModal()" style="background: none; border: none; color: #14171a; cursor: pointer; font-size: 20px;">✕</button>
+                <button id="addCommentBtn" class="btn-tweet">Reply</button>
+            </div>
+            <div id="commentsList" style="max-height: 400px; overflow-y: auto;"></div>
+            <textarea id="commentContent" placeholder="Tweet your reply" style="width: 100%; background: transparent; border: none; color: #14171a; font-size: 18px; outline: none; margin-top: 16px; resize: none;"></textarea>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
